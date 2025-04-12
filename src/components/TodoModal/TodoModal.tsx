@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Loader } from '../Loader';
 import { Todo } from '../../types/Todo';
 import { User } from '../../types/User';
+import classNames from 'classnames';
 
 type Props = {
   choosenTodo: Todo;
@@ -39,7 +40,12 @@ export const TodoModal: React.FC<Props> = ({
   }, [choosenTodo]);
 
   return (
-    <div className={`modal ${choosenTodo ? 'is-active' : ''}`} data-cy="modal">
+    <div
+      className={classNames('modal', {
+        'is-active': choosenTodo,
+      })}
+      data-cy="modal"
+    >
       <div className="modal-background" />
 
       {isLoadingUser ? (

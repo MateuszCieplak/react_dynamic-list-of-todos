@@ -107,7 +107,6 @@ export const App: React.FC = () => {
                 <TodoList
                   todos={visibleTodos}
                   selectedTodo={selectedTodo}
-                  modalIsShown={modalIsShown}
                   setModalIsShown={setModalIsShown}
                   handleSelectTodo={handleSelectTodo}
                 />
