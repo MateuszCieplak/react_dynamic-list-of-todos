@@ -22,15 +22,17 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      setIsLoadingTodos(true);
-      setTodos(null);
+      try {
+        setIsLoadingTodos(true);
+        setTodos(null);
+        const allTodos = await getTodos();
 
-      const allTodos = getTodos()
-        .then(setTodos)
-        .catch(console.error)
-        .finally(() => setIsLoadingTodos(false));
-
-      return allTodos;
+        setTodos(allTodos);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoadingTodos(false);
+      }
     };
 
     loadData();
@@ -114,7 +116,7 @@ export const App: React.FC = () => {
           </div>
         </div>
       </div>
-      {modalIsShown && (
+      {modalIsShown && selectedTodo ? (
         <TodoModal
           getUser={getUser}
           choosenTodo={selectedTodo}
@@ -122,7 +124,7 @@ export const App: React.FC = () => {
           handlesetIsLoadingUser={handlesetIsLoadingUser}
           closeTodoModal={closeTodoModal}
         />
-      )}
+      ) : null}
     </>
   );
 };

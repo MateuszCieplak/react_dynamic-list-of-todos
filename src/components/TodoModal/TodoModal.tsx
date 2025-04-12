@@ -23,13 +23,16 @@ export const TodoModal: React.FC<Props> = ({
 
   useEffect(() => {
     const loadData = async () => {
-      handlesetIsLoadingUser(true);
-      const userOfTodo = getUser(choosenTodo.userId)
-        .then(setUser)
-        .catch(console.error)
-        .finally(() => handlesetIsLoadingUser(false));
+      try {
+        handlesetIsLoadingUser(true);
+        const userOfTodo = await getUser(choosenTodo.userId);
 
-      return userOfTodo;
+        setUser(userOfTodo);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        handlesetIsLoadingUser(false);
+      }
     };
 
     loadData();
